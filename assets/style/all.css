@@ -11565,7 +11565,6 @@ fieldset:disabled .btn {
 
 img {
   max-width: 100%;
-  display: block;
 }
 
 .navOuter {
@@ -11602,11 +11601,15 @@ nav a {
   text-decoration: none;
 }
 
+nav a:hover {
+  color: #E88224;
+}
+
 nav img {
   display: block;
   max-width: 60%;
-  width: 4%;
-  height: 4%;
+  width: 50%;
+  height: auto;
   padding: 15px 0;
 }
 
@@ -11672,6 +11675,10 @@ nav li {
   text-decoration: none;
 }
 
+.navBar li a:hover {
+  color: #E88224;
+}
+
 .footer {
   background-color: #6a3a0D;
   text-align: center;
@@ -11686,6 +11693,8 @@ nav li {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .search input[type="text"] {
@@ -11693,6 +11702,13 @@ nav li {
   vertical-align: middle;
   border-radius: 5px;
   padding: 5px;
+  size: 60px;
+}
+
+@media (max-width: 400) {
+  .search input[type="text"] {
+    size: 20px;
+  }
 }
 
 .btn-primary {
@@ -11700,6 +11716,62 @@ nav li {
   border: 1px solid #E88224;
   color: #fff;
   vertical-align: middle;
+}
+
+.vitality {
+  background-image: url(../images/background.png);
+}
+
+.cardCollect {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+@media (max-width: 400px) {
+  .cardCollect {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+.cardTitle {
+  text-align: center;
+  font-size: 3rem;
+  color: #756658;
+  font-weight: 700;
+}
+
+.more {
+  text-align: right;
+}
+
+.card-text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.bookmark {
+  width: 10%;
+}
+
+.popular {
+  background-image: url(../images/background.png);
 }
 
 /*# sourceMappingURL=all.css.map */
