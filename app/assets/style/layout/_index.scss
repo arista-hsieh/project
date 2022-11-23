@@ -123,6 +123,13 @@ nav{
 }
 .more{
   text-align: right;
+  a{
+    color:#756658;
+    text-decoration: none;
+    &:hover{
+      color:#8F7862;
+    }
+  }
 }
 .card-text{
   display: flex;
