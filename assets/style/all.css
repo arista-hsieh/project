@@ -11757,6 +11757,15 @@ nav li {
   text-align: right;
 }
 
+.more a {
+  color: #756658;
+  text-decoration: none;
+}
+
+.more a:hover {
+  color: #8F7862;
+}
+
 .card-text {
   display: -webkit-box;
   display: -ms-flexbox;
