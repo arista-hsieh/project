@@ -1,0 +1,52 @@
+.wrap {
+  background-image: url(../images/background.png);
+}
+
+.week {
+  display: flex;
+  justify-content: space-between;
+
+  @media(max-width:400px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.selectMenu {
+  margin: 0 80px 0 0;
+  width: 18rem;
+  white-space: nowrap;
+  @media(max-width:400px) {
+    margin: 0 auto;
+  }
+  ul {
+    background-color: #6a3a0D;
+    margin-top: 10px;
+    list-style-type: none;
+    padding: 0;
+    li {
+      text-align: center;
+      padding: 5px 30px;
+      font-size: 1.5rem;
+      color: #fff;
+      border: 1px solid #fff;
+      &:hover {
+        background-color: #E88224;
+      }
+
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.active {
+  background-color: #E88224;
+}
+
+.cardCollect {
+  flex-wrap: wrap;
+  padding: 10px 0 0 0;
+}
