@@ -11774,4 +11774,75 @@ nav li {
   background-image: url(../images/background.png);
 }
 
+.wrap {
+  background-image: url(../images/background.png);
+}
+
+.week {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+@media (max-width: 400px) {
+  .week {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+.selectMenu {
+  margin: 0 80px 0 0;
+  width: 18rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 400px) {
+  .selectMenu {
+    margin: 0 auto;
+  }
+}
+
+.selectMenu ul {
+  background-color: #6a3a0D;
+  margin-top: 10px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.selectMenu ul li {
+  text-align: center;
+  padding: 5px 30px;
+  font-size: 1.5rem;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.selectMenu ul li:hover {
+  background-color: #E88224;
+}
+
+.selectMenu ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.active {
+  background-color: #E88224;
+}
+
+.cardCollect {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 10px 0 0 0;
+}
+
 /*# sourceMappingURL=all.css.map */
