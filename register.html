@@ -48,18 +48,18 @@
 <section class="margin">
   <div class="container">
     <div class="login">
-      <p class="title mb-5">會員登入</p>
-      <form class="form" action="POST" class="js-form-signup">
+      <p class="title mb-5">會員註冊</p>
+      <form action="POST" class="js-form-signup">
         <div class="mb-3 row">
           <label for="email" class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="email" placeholder="email@example.com">
+            <input type="email" name="email" class="form-control" id="email" placeholder="email@example.com">
           </div>
         </div>
         <div class="mb-3 row">
           <label for="password" class="col-sm-2 col-form-label">Password</label>
           <div class="col-sm-10">
-            <input type="password" class="form-control" id="password">
+            <input type="password" name="password" class="form-control" id="password">
           </div>
         </div>
         <input type="button" value="註冊" class="js-btn-signup">
@@ -70,6 +70,7 @@
   </div>
 </section>
 
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 <script>
   const BASE_URL = 'https://json-server-zeta-eight.vercel.app';
   const SIGNUP_URL = `${BASE_URL}/register`;
@@ -111,8 +112,6 @@
         })
         .catch(function (error) {
           console.log('error:::', JSON.stringify(error, null, 2));
-
-          domMsg.innerHTML = error ? .response ? .data || error;
         });
     }
 
