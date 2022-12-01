@@ -1,0 +1,30 @@
+---
+title: 一起帶冷便當
+layout: ./app/layout.ejs
+engine: ejs
+current: index
+---
+
+<section class="margin">
+  <div class="container">
+    <div class="login">
+      <p class="title mb-5">會員登入</p>
+      <form class="form" action="post">
+        <div class="mb-3 row">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="email" placeholder="email@example.com">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="password" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="password">
+          </div>
+        </div>
+        <input type="button" value="登入">
+      </form>
+      <p class="member pt-4">還不是會員? <a href="register.html">註冊會員</a></p>
+    </div>
+  </div>
+</section>

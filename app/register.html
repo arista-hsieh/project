@@ -1,0 +1,86 @@
+---
+title: 一起帶冷便當
+layout: ./app/layout.ejs
+engine: ejs
+current: index
+---
+
+<section class="margin">
+  <div class="container">
+    <div class="login">
+      <p class="title mb-5">會員登入</p>
+      <form class="form" action="POST" class="js-form-signup">
+        <div class="mb-3 row">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="email" placeholder="email@example.com">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="password" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="password">
+          </div>
+        </div>
+        <input type="button" value="註冊" class="js-btn-signup">
+      </form>
+      <pre class="js-msg"></pre>
+      <p class="member pt-4">已經是會員? <a href="login.html">登入會員</a></p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const BASE_URL = 'http://localhost:3000';
+  const SIGNUP_URL = `${BASE_URL}/signup`;
+
+  const domMsg = document.querySelector('.js-msg');
+  const btnSignup = document.querySelector('.js-btn-signup');
+  const form = document.querySelector('.js-form-signup');
+
+  function saveUserToLocal({
+    accessToken,
+    user
+  }) {
+    localStorage.setItem('token', accessToken);
+    localStorage.setItem('userId', user.id);
+  }
+
+  function signup() {
+    console.log('Signup!');
+
+    const url = `${SIGNUP_URL}`;
+    const data = {
+      email: form.email.value.trim(),
+      password: form.password.value.trim(),
+    };
+
+    const hasInput = data.email && data.password;
+    if (hasInput) {
+      return axios
+        .post(url, data)
+        .then(function (response) {
+          console.log('signup:::', JSON.stringify(response, null, 2));
+
+          domMsg.innerHTML = response.statusText;
+
+          if (response.status === 201) {
+            saveUserToLocal(response.data);
+            window.location.replace('/login.html');
+          }
+        })
+        .catch(function (error) {
+          console.log('error:::', JSON.stringify(error, null, 2));
+
+          domMsg.innerHTML = error ? .response ? .data || error;
+        });
+    }
+
+    domMsg.innerHTML = 'pls input data';
+  }
+
+  function init() {
+    btnSignup.addEventListener('click', () => signup());
+  }
+  init();
+</script>
