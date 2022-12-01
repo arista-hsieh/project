@@ -49,7 +49,7 @@
   <div class="container">
     <div class="login">
       <p class="title mb-5">會員登入</p>
-      <form class="form" action="post">
+      <form class="form" action="POST" class="js-form-login">
         <div class="mb-3 row">
           <label for="email" class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-10">
@@ -62,12 +62,86 @@
             <input type="password" class="form-control" id="password">
           </div>
         </div>
-        <input type="button" value="登入">
+        <input type="button" class="js-btn-login" value="登入">
       </form>
+      <pre class="js-msg"></pre>
       <p class="member pt-4">還不是會員? <a href="register.html">註冊會員</a></p>
     </div>
   </div>
 </section>
+
+<script>
+  const BASE_URL = 'http://localhost:3000';
+  const LOGIN_URL = `${BASE_URL}/login`;
+
+  const domMsg = document.querySelector('.js-msg');
+  const btnLogin = document.querySelector('.js-btn-login');
+  const form = document.querySelector('.js-form-login');
+
+  function saveUserToLocal({
+    accessToken,
+    user
+  }) {
+    localStorage.setItem('token', accessToken);
+    localStorage.setItem('userId', user.id);
+    localStorage.setItem('nickname', user.nickname);
+    localStorage.setItem('avatar', user.avatar);
+  }
+
+  function login() {
+    console.log('Login!');
+
+    const url = `${LOGIN_URL}`;
+    const data = {
+      email: form.email.value.trim(),
+      password: form.password.value.trim(),
+    };
+
+    const hasInput = data.email && data.password;
+    if (hasInput) {
+      return axios
+        .post(url, data)
+        .then(function (response) {
+          console.log('login:::', JSON.stringify(response, null, 2));
+
+          domMsg.innerHTML = response.statusText;
+
+          if (response.status === 200) {
+            saveUserToLocal(response.data);
+
+            let redirectPath = '/';
+
+            setTimeout(() => {
+              console.log('Redirect!');
+              window.location.replace(redirectPath);
+            }, 150);
+          }
+        })
+        .catch(function (error) {
+          console.log('error:::', JSON.stringify(error, null, 2));
+
+          domMsg.innerHTML = error ? .response ? .data || error;
+        });
+    }
+
+    domMsg.innerHTML = '請輸入資料 (ﾉ◕ヮ◕)ﾉ';
+  }
+
+  function localLoginChecker() {
+    console.log('localLoginChecker!');
+    // const AUTH = `Bearer ${localStorage.getItem('token')}`;
+    const localJWT = localStorage.getItem('token');
+    // console.log(localJWT);
+
+  }
+
+  function init() {
+    localLoginChecker();
+
+    btnLogin.addEventListener('click', () => login());
+  }
+  init();
+</script>
 
     <footer class="footer p-3">
       此專題僅為面試作品所用，非商業營利性質
