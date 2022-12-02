@@ -5,9 +5,9 @@ engine: ejs
 current: index
 ---
 
-<div class="js-post-list cardCollect">
+<ul class="js-post-list list-unstyled cardCollect">
 
-</div>
+</ul>
 
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 <script>
@@ -56,6 +56,16 @@ current: index
       const article = bookmark.post.body ? bookmark.post.body : '';
 
       template += `
+      <li data-bookmark-id=${bookmark.id} class="card mb-3" style="width: 18rem;">
+          <img src="${bookmark.post.img}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">${bookmark.post.title}</h5>
+            <div class="card-text">
+              <div class="like">16 like</div>
+              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
+            </div>
+          </div>
+        </li>
             <li
               data-bookmark-id=${bookmark.id}
               class="col-sm-6 col-lg-4 mb-4"
