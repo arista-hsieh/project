@@ -5,9 +5,11 @@ engine: ejs
 current: index
 ---
 
+<div class="container">
 <ul class="js-post-list list-unstyled cardCollect">
 
 </ul>
+</div>
 
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 <script>
@@ -57,7 +59,7 @@ current: index
 
       template += `
       <li data-bookmark-id=${bookmark.id} class="card mb-3" style="width: 18rem;">
-          <img src="${bookmark.post.img}" class="card-img-top" alt="...">
+          <img src=${bookmark.post.img} class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">${bookmark.post.title}</h5>
             <div class="card-text">
@@ -66,38 +68,6 @@ current: index
             </div>
           </div>
         </li>
-            <li
-              data-bookmark-id=${bookmark.id}
-              class="col-sm-6 col-lg-4 mb-4"
-            >
-              <div class="card">
-                <section class="card-body">
-
-                  <div class="d-flex justify-content-end align-items-center p-0">
-                    <button type="button"
-                      class="d-flex justify-content-end align-items-center gap-1 px-1 mb-2
-                        btn btn-sm btn-secondary"
-                      data-type="DELETE"
-                      data-bookmark-id=${bookmark.id}
-                    >
-                      已收藏
-                      <span class="material-symbols-outlined">
-                        bookmark_added
-                      </span>
-                    </button>
-                  </div>
-
-                  <h3 class="card-title  text-truncate">
-                    ${bookmark.post.title}
-                  </h3>
-
-                  <article class="card-text  text-truncate">
-                    ${article}
-                  </article>
-
-                </section>
-              </div>
-            </li>
           `;
     });
 
