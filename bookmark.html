@@ -46,9 +46,9 @@
 
     
 <div class="container">
-<ul class="js-post-list list-unstyled mt-5 cardCollect">
+  <ul class="js-post-list list-unstyled mt-5 cardCollect">
 
-</ul>
+  </ul>
 </div>
 
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
@@ -99,12 +99,18 @@
 
       template += `
       <li data-bookmark-id=${bookmark.id} class="card mb-3" style="width: 18rem;">
-          <img src=${bookmark.post.img} class="card-img-top" alt="...">
+          <img src=${bookmark.post.img} class="card-img-top" alt="image">
           <div class="card-body">
             <h5 class="card-title">${bookmark.post.title}</h5>
             <div class="card-text">
-              <div class="like">16 like</div>
-              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
+              <button type="button"
+                      class="d-flex justify-content-end align-items-center gap-1 px-1 mb-2
+                        btn btn-sm btn-secondary"
+                      data-type="DELETE"
+                      data-bookmark-id=${bookmark.id}
+                    >
+                      已收藏
+              </button>
             </div>
           </div>
         </li>
