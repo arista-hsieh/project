@@ -1,0 +1,131 @@
+---
+title: 一起帶冷便當
+layout: ./app/layout.ejs
+engine: ejs
+current: index
+---
+
+<div class="js-post-list cardCollect">
+
+</div>
+
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+  const BASE_POST_URL = `${BASE_URL}/640/posts`;
+  const BOOKMARKS_URL = `${BASE_URL}/600/bookmarks`;
+
+  const domPostList = document.querySelector('.js-post-list');
+
+  function getLoggedID() {
+    return localStorage.getItem('userId') || 0;
+  }
+
+  function removeBookmarks(event) {
+    const target = event.target;
+    console.log('target:::', target);
+
+    const targetBtn = event.target.closest('button');
+    console.log('targetBtn:::', targetBtn);
+
+    if (!targetBtn) {
+      return;
+    }
+
+    const bookmarkId = targetBtn.dataset.bookmarkId;
+    console.log('bookmarkId:::', bookmarkId);
+
+    const url = `${BOOKMARKS_URL}/${bookmarkId}`;
+
+    axios
+      .delete(url)
+      .then(function (response) {
+
+        if (response.status === 200) {
+          targetBtn.disabled = false;
+          renderBookmarks();
+        }
+      })
+      .catch(function (error) {
+        console.log('error:::', JSON.stringify(error, null, 2));
+      });
+  }
+
+  function templateOfBookmarks(bookmarks, template = ``) {
+    bookmarks.forEach(function (bookmark) {
+      const article = bookmark.post.body ? bookmark.post.body : '';
+
+      template += `
+            <li
+              data-bookmark-id=${bookmark.id}
+              class="col-sm-6 col-lg-4 mb-4"
+            >
+              <div class="card">
+                <section class="card-body">
+
+                  <div class="d-flex justify-content-end align-items-center p-0">
+                    <button type="button"
+                      class="d-flex justify-content-end align-items-center gap-1 px-1 mb-2
+                        btn btn-sm btn-secondary"
+                      data-type="DELETE"
+                      data-bookmark-id=${bookmark.id}
+                    >
+                      已收藏
+                      <span class="material-symbols-outlined">
+                        bookmark_added
+                      </span>
+                    </button>
+                  </div>
+
+                  <h3 class="card-title  text-truncate">
+                    ${bookmark.post.title}
+                  </h3>
+
+                  <article class="card-text  text-truncate">
+                    ${article}
+                  </article>
+
+                </section>
+              </div>
+            </li>
+          `;
+    });
+
+    return template;
+  }
+
+  function renderBookmarks() {
+    const userId = getLoggedID();
+    const url = `${BASE_URL}/users/${userId}/bookmarks?_expand=post`;
+
+    axios
+      .get(url)
+      .then(function (response) {
+        console.log('GET-Posts:::', JSON.stringify(response, null, 2));
+
+        if (response.status === 200) {
+          const bookmarksData = response.data;
+          const htmlContent = templateOfBookmarks(bookmarksData);
+
+          domPostList.innerHTML = htmlContent;
+
+          if (response.data.length === 0) {
+            domPostList.innerHTML = '...還沒有收藏 (◕ᴥ◕Ʋ)';
+          }
+        }
+      })
+      .catch(function (error) {
+
+        domMsg.innerHTML = error ? .response ? .status || error;
+      });
+  }
+
+  function init() {
+    renderBookmarks();
+
+    domPostList.addEventListener('click', (event) =>
+      removeBookmarks(event)
+    );
+  }
+
+  init();
+</script>
