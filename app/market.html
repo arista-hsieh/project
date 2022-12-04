@@ -7,8 +7,8 @@ current: main
 
 <div class="search p-5">
   <label for="search">
-    <input type="text" id="search" placeholder="海鮮/排骨/三明治">
-    <div class="btn btn-primary ms-sm-2">搜尋</div>
+    <input type="text" id="search" class="sear" placeholder="海鮮/排骨/三明治">
+    <div class="btn btn-primary ms-sm-2 js-match">搜尋</div>
   </label>
 </div>
 
@@ -75,63 +75,69 @@ current: main
             <h5 class="card-title">培根義大利麵&炸雞便當</h5>
             <div class="card-text">
               <div class="like">16 like</div>
-              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span></div>
+              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
+            </div>
           </div>
         </div>
-  
+
         <div class="card mb-3" style="width: 18rem;">
           <img src="./assets/images/banto35.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">鍋貼滷味燙便當</h5>
             <div class="card-text">
               <div class="like">16 like</div>
-              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span></div>
+              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
+            </div>
           </div>
         </div>
-  
+
         <div class="card mb-3" style="width: 18rem;">
           <img src="./assets/images/banto36.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">蕃茄義大利麵&焗烤蔬菜便當</h5>
             <div class="card-text">
               <div class="like">16 like</div>
-              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span></div>
+              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
+            </div>
           </div>
         </div>
-  
+
         <div class="card mb-3" style="width: 18rem;">
           <img src="./assets/images/banto37.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">火腿玉米蛋餅&烤雞翅便當</h5>
             <div class="card-text">
               <div class="like">16 like</div>
-              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span></div>
+              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
+            </div>
           </div>
         </div>
 
-      <div class="card mb-3" style="width: 18rem;">
-        <img src="./assets/images/banto38.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">燒賣&餡餅&三角骨便當</h5>
-          <div class="card-text">
-            <div class="like">16 like</div>
-            <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span></div>
+        <div class="card mb-3" style="width: 18rem;">
+          <img src="./assets/images/banto38.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">燒賣&餡餅&三角骨便當</h5>
+            <div class="card-text">
+              <div class="like">16 like</div>
+              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="card mb-3" style="width: 18rem;">
-        <img src="./assets/images/banto39.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">彈珠香腸&炒飯便當</h5>
-          <div class="card-text">
-            <div class="like">16 like</div>
-            <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span></div>
+        <div class="card mb-3" style="width: 18rem;">
+          <img src="./assets/images/banto39.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">彈珠香腸&炒飯便當</h5>
+            <div class="card-text">
+              <div class="like">16 like</div>
+              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
+            </div>
+          </div>
         </div>
-      </div>
-      
-    </ul>
 
-    </div>
+      </ul>
+
+  </div>
   </div>
 </section>
 
@@ -147,6 +153,9 @@ current: main
 
   const btnAddBookmark = document.querySelector('.js-add-bookmarks');
   const btnRemoveBookmark = document.querySelector('.js-remove-bookmarks');
+
+  var search = document.querySelector(".sear");
+  var btnMatch = document.querySelector(".js-match");
 
   let bookmarkId = 0;
   /* end of definition */
@@ -321,4 +330,37 @@ current: main
 
   // MAIN
   init();
+
+  btnMatch.addEventListener("click", function (e) {
+    const params = new URLSearchParams(document.location.search);
+    const postId = params.get('postId') || 1;
+    const url = `${BASE_POST_URL}`;
+
+    axios
+      .get(url)
+      .then(function (response) {
+
+        str = ""
+        if (response.status === 200) {
+          // #Step-2
+          const postsData = response.data;
+          postsData.forEach(function (item) {
+            if (item.title.match(search.value)) {
+              str += `<li class="card mb-3" style="width: 18rem;">
+          <img src="${item.img}" class="card-img-top" alt="bento">
+          <div class="card-body">
+            <h5 class="card-title">${item.title}</h5>
+            <div class="card-text">
+              <div class="like">16 like</div>
+              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
+            </div>
+          </div>
+        </li>`
+            }
+          })
+          domPostList.innerHTML = str;
+        }
+      })
+      .catch(function (error) {});
+  })
 </script>
