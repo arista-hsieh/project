@@ -67,15 +67,13 @@ current: index
 
           if (response.status === 201) {
             saveUserToLocal(response.data);
-            window.location.replace('/login.html');
+            window.location.replace('https://arista-hsieh.github.io/project/login.html');
           }
         })
         .catch(function (error) {
           console.log('error:::', JSON.stringify(error, null, 2));
         });
     }
-
-    domMsg.innerHTML = 'pls input data';
   }
 
   function init() {
