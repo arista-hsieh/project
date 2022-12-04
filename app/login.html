@@ -34,6 +34,7 @@ current: index
 <script>
   const BASE_URL = 'https://json-server-zeta-eight.vercel.app';
   const LOGIN_URL = `${BASE_URL}/login`;
+  const LOGOUT_URL = `${BASE_URL}/logout`;
 
   const domMsg = document.querySelector('.js-msg');
   const btnLogin = document.querySelector('.js-btn-login');
@@ -82,8 +83,6 @@ current: index
           console.log('error:::', JSON.stringify(error, null, 2));
         });
     }
-
-    domMsg.innerHTML = '請輸入資料 (ﾉ◕ヮ◕)ﾉ';
   }
 
   function localLoginChecker() {
