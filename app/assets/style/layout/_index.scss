@@ -141,3 +141,10 @@ nav{
 .popular{
   background-image: url(../images/background.png);
 }
+.btn-primary{
+  &:hover{
+    background-color: #6a3a0D;
+    border: 1px solid #6a3a0D;
+    color:#fff;
+  }
+}
