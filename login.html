@@ -23,7 +23,7 @@
               <li><a href="main.html">冷便當食譜</a></li>
               <li><a href="qa.html">冷便當小教室</a></li>
               <li><a href="bookmark.html">我的收藏</a></li>
-              <li><a href="login.html">會員登入</a></li>
+              <li class="js-login"><a href="login.html">會員登入</a></li>
             </ul>
           </div>
         </nav>
@@ -74,6 +74,7 @@
 <script>
   const BASE_URL = 'https://json-server-zeta-eight.vercel.app';
   const LOGIN_URL = `${BASE_URL}/login`;
+  const LOGOUT_URL = `${BASE_URL}/logout`;
 
   const domMsg = document.querySelector('.js-msg');
   const btnLogin = document.querySelector('.js-btn-login');
@@ -122,8 +123,6 @@
           console.log('error:::', JSON.stringify(error, null, 2));
         });
     }
-
-    domMsg.innerHTML = '請輸入資料 (ﾉ◕ヮ◕)ﾉ';
   }
 
   function localLoginChecker() {
