@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>一起帶冷便當</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
+    <link rel="stylesheet" href="./assets/style/all.css">
+  </head>
+
+  <body>
+    <div class="navOuter">
+      <div class="container">
+        <nav>
+          <a href="index.html"><img src="./assets/images/logo.png" alt="logo"></a>
+          <div>
+            <ul>
+              <li><a href="main.html">冷便當食譜</a></li>
+              <li><a href="qa.html">冷便當小教室</a></li>
+              <li><a href="bookmark.html">我的收藏</a></li>
+              <li class="js-login"><a href="login.html">會員登入</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="mobile">
+        <div class="navMobile">
+          <a class="pt-3 pb-3 ms-3" href="index.html"><img src="./assets/images/logo.png" alt="logo"></a>
+          <div class="menu pt-3 me-3 pt-sm-4 me-sm-5"><i class="fa-solid fa-bars"></i>
+          </div>
+        </div>
+        <ul class="navBar">
+          <li><a href="main.html">冷便當食譜</a></li>
+          <li><a href="qa.html">冷便當小教室</a></li>
+          <li><a href="bookmark.html">我的收藏</a></li>
+          <li><a href="login.html">會員登入</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    
+
+<div class="container">
+  <div class="wrap2">
+  </div>
+</div>
+
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+  const id = location.href.split("=")[1];
+  const BASE_URL = 'https://json-server-zeta-eight.vercel.app';
+  const BASE_POST_URL = `${BASE_URL}/posts`;
+  const BOOKMARKS_URL = `${BASE_URL}/600/bookmarks`;
+  const USERS_URL = `${BASE_URL}/600/users`;
+
+  const domPostList = document.querySelector('.js-post-list');
+  const domState = document.querySelector('.js-bookmark-state');
+
+  const btnAddBookmark = document.querySelector('.js-add-bookmarks');
+  const btnRemoveBookmark = document.querySelector('.js-remove-bookmarks');
+
+  let bookmarkId = 0;
+  /* end of definition */
+
+  function getLoggedID() {
+    return localStorage.getItem('userId') || 0;
+  }
+  /* end of hasLogged() */
+
+  function renderBookmarkState() {
+    const params = new URLSearchParams(document.location.search);
+    const postId = params.get('postId') || 1;
+
+    const userId = getLoggedID();
+    // users/1/bookmarks?postId=2
+    const url = `${USERS_URL}/${userId}/bookmarks?postId=${postId}`;
+
+    axios
+      .get(url)
+      .then(function (response) {
+
+        if (response.data.length !== 0) {
+          bookmarkId = response.data[0].id;
+
+          domState.innerHTML = `                
+              已收藏
+          `;
+
+          btnRemoveBookmark.style.display = 'block';
+          btnAddBookmark.style.display = 'none';
+        }
+        /* end of res-OK */
+
+        if (response.data.length === 0) {
+          domState.innerHTML = `                
+              未收藏
+          `;
+
+          btnRemoveBookmark.style.display = 'none';
+          btnAddBookmark.style.display = 'block';
+        }
+      })
+      .catch(function (error) {
+      });
+  }
+
+  function removeBookmark() {
+    console.log(bookmarkId);
+
+    const url = `${BOOKMARKS_URL}/${bookmarkId}`;
+
+    axios
+      .delete(url)
+      .then(function (response) {
+
+        if (response.status === 200) {
+          console.log('200');
+
+          renderBookmarkState();
+        }
+      })
+      .catch(function (error) {
+      });
+  }
+
+  function addBookmark() {
+    const params = new URLSearchParams(document.location.search);
+    const postId = params.get('postId') || 1;
+
+    const url = `${BASE_POST_URL}/${postId}/bookmarks`;
+
+    const data = {
+      userId: getLoggedID(),
+    };
+
+    axios
+      .post(url, data)
+      .then(function (response) {
+        console.log('GET-:::', JSON.stringify(response, null, 2));
+
+        if (response.status === 201) {
+          renderBookmarkState();
+        }
+      })
+      .catch(function (error) {
+      });
+  }
+
+  axios.get(`${BASE_URL}/posts/${id}`)
+    .then(function (response) {
+      data = response.data;
+      const wrap2 = document.querySelector(".wrap2")
+      str = `<div class="image mt-5">
+              <img src="${data.img}" alt="bento">
+            </div>
+            <div class="m-5">
+              <h2 class="mt-4 mb-4">${data.title}</h2>
+              <h3 class="mb-3">| 保存方式．時間 |</h3>
+              <p class="mb-5">建議常溫保存,半天食畢(夏季須再加小冰寶)</p>
+              <h3 class="mb-3">【材料(2人份)】</h3>
+              <p>明蝦......4隻<br>
+                雞蛋......1顆<br>
+                低筋麵粉......100g<br>
+                麵包粉......1碗</p>
+              <p>■調味料<br>
+                  鹽......1小匙<br>
+                  米酒......1大匙<br>
+                  太白粉......1大匙<br>
+                  冰水......約150c.c.</p>
+              <h3 class="mt-3 mb-3">【作法】</h3>
+              <p>1 明蝦洗淨後去頭去殼，留尾段，去腸泥，用刀背將尾巴刮數刀<br>
+                  TIP<br>
+              尾巴刮數刀主要是為了去除水分，避免入鍋油炸時油爆。</p>
+              <p>2 在明蝦腹部切四刀(不切斷蝦身)，手輕壓蝦背數下，幫助油炸時蝦子不捲縮。</p>
+              <p>3 取一容器依序放入米酒、太白粉、明蝦，輕輕抓醃後用清水洗淨，並用廚房紙巾擦乾，備用。</p>
+              <p>4 雞蛋打散，一邊倒入冰水一邊拌勻，加入鹽和過篩後的低筋麵粉，用料理筷輕輕拌勻，避免過度攪打，即為麵衣。<br>
+                  TIP<br>
+                  調製麵衣用的冰水其中50c.c.可用啤酒取代，幫助增加炸蝦的酥脆口感。</p>
+              <p>4 步驟2的明蝦撒上一層薄薄的低筋麵粉(粉量外)，輕拍掉多餘的粉後，裹上調製好的麵衣，再沾滿麵 
+                  包粉，靜置備用。</p>
+              <p>5 熱油鍋至170-180°C，放入明蝦炸至表面金黃後，置於廚房紙巾上吸油即可。</p>
+            </div>
+            <div class="d-flex justify-content-center mb-5">
+              <a href="index.html">回首頁</a>
+            </div>`
+      wrap2.innerHTML = str
+    })
+</script>
+
+    <footer class="footer p-3">
+      此專題僅為面試作品所用，非商業營利性質
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="./assets/js/all.js"></script>
+    <script>
+      $(function () {
+        $(".navBar").hide();
+        $(".fa-bars").click(function () {
+          $(".fa-bars").toggleClass('fa-xmark')
+          $(".navBar").slideToggle();
+        })
+      })
+    </script>
+  </body>
+
+</html>

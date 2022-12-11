@@ -187,190 +187,55 @@
 <script>
   const BASE_URL = 'https://json-server-zeta-eight.vercel.app';
   const BASE_POST_URL = `${BASE_URL}/posts`;
-  const BOOKMARKS_URL = `${BASE_URL}/600/bookmarks`;
-  const USERS_URL = `${BASE_URL}/600/users`;
 
   const domPostList = document.querySelector('.js-post-list');
-  const domState = document.querySelector('.js-bookmark-state');
-
-  const btnAddBookmark = document.querySelector('.js-add-bookmarks');
-  const btnRemoveBookmark = document.querySelector('.js-remove-bookmarks');
 
   var search = document.querySelector(".sear");
   var btnMatch = document.querySelector(".js-match");
 
-  let bookmarkId = 0;
-  /* end of definition */
 
   function getLoggedID() {
     return localStorage.getItem('userId') || 0;
   }
-  /* end of hasLogged() */
-
-  function renderBookmarkState() {
-    const params = new URLSearchParams(document.location.search);
-    const postId = params.get('postId') || 1;
-    console.log('postId:::', postId);
-
-    const userId = getLoggedID();
-    // users/1/bookmarks?postId=2
-    const url = `${USERS_URL}/${userId}/bookmarks?postId=${postId}`;
-
-    console.log('url:::', url);
-
-    axios
-      .get(url)
-      .then(function (response) {
-        console.log('GET-:::', JSON.stringify(response, null, 2));
-
-        if (response.data.length !== 0) {
-          bookmarkId = response.data[0].id;
-
-          domState.innerHTML = `                
-              已收藏
-          `;
-
-          btnRemoveBookmark.style.display = 'block';
-          btnAddBookmark.style.display = 'none';
-        }
-        /* end of res-OK */
-
-        if (response.data.length === 0) {
-          domState.innerHTML = `                
-              未收藏
-          `;
-
-          btnRemoveBookmark.style.display = 'none';
-          btnAddBookmark.style.display = 'block';
-        }
-      })
-      .catch(function (error) {
-        // console.log('error:::', JSON.stringify(error, null, 2));
-      });
-    /*  end of axios */
-  }
-  /* end of renderBookmarkBtn() */
-
-  function removeBookmark() {
-    console.log(bookmarkId);
-
-    const url = `${BOOKMARKS_URL}/${bookmarkId}`;
-
-    axios
-      .delete(url)
-      .then(function (response) {
-        console.log('DELETE-:::', JSON.stringify(response, null, 2));
-
-        if (response.status === 200) {
-          console.log('200');
-
-          renderBookmarkState();
-        }
-        /* end of res-OK */
-      })
-      .catch(function (error) {
-        // console.log('error:::', JSON.stringify(error, null, 2));
-      });
-    /*  end of axios */
-  }
-  /* end of removeBookmark() */
-
-  function addBookmark() {
-    const params = new URLSearchParams(document.location.search);
-    const postId = params.get('postId') || 1;
-    console.log('postId:::', postId);
-
-    const url = `${BASE_POST_URL}/${postId}/bookmarks`;
-
-    const data = {
-      userId: getLoggedID(),
-    };
-
-    axios
-      .post(url, data)
-      .then(function (response) {
-        console.log('GET-:::', JSON.stringify(response, null, 2));
-
-        if (response.status === 201) {
-          renderBookmarkState();
-        }
-        /* end of res-OK */
-      })
-      .catch(function (error) {
-        // console.log('error:::', JSON.stringify(error, null, 2));
-      });
-    /*  end of axios */
-  }
-  /* end of addBookmark() */
 
   function renderPostInfo() {
     const params = new URLSearchParams(document.location.search);
     const postId = params.get('postId') || 1;
-    console.log('postId:::', postId);
 
     const url = `${BASE_POST_URL}`;
 
     axios
       .get(url)
       .then(function (response) {
-        console.log('GET-Posts:::', JSON.stringify(response, null, 2));
 
         str = ""
         if (response.status === 200) {
-          // #Step-2
           const postsData = response.data;
-          console.log(postsData)
-          // const htmlContent = templateOfPosts(postsData);
-
-          // #Step-3
-          // domPostList.innerHTML = htmlContent;
           postsData.forEach(function (item) {
             if (item.category == "一周冷便當") {
-              str += `<li class="card mb-3" style="width: 18rem;">
-          <img src="${item.img}" class="card-img-top" alt="bento">
-          <div class="card-body">
-            <h5 class="card-title">${item.title}</h5>
-            <div class="card-text">
-              <div class="like">16 like</div>
-              <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
-            </div>
-          </div>
-        </li>`
+              str += `<li class="card mb-3" style="width: 18rem;"><a href="content.html?id=${item.id}">
+              <img src="${item.img}" class="card-img-top" alt="bento">
+              <div class="card-body">
+                <h5 class="card-title">${item.title}</h5>
+                <div class="card-text">
+                  <div class="like">16 like</div>
+                <span class="bookmark"><img src="./assets/images/icon-like-filled.png" alt="bookmark"></span>
+                </div>
+              </div>
+              </a>
+            </li>`
             }
           })
           domPostList.innerHTML = str;
         }
-        /* end of res-OK */
       })
       .catch(function (error) {
-        // console.log('error:::', JSON.stringify(error, null, 2));
       });
-    /*  end of axios */
   }
-  /* end of renderPostInfo() */
-
-  /**
-   * #Step-0: after page refresh
-   */
   function init() {
     renderPostInfo();
-
-    const hasUserId = getLoggedID();
-
-    if (hasUserId) {
-      renderBookmarkState();
-    }
-
-    if (!hasUserId) {
-      document.querySelector('.js-need-login').style.display = 'none';
-    }
-
-    btnAddBookmark.addEventListener('click', () => addBookmark());
-    btnRemoveBookmark.addEventListener('click', () => removeBookmark());
   }
-  /* end of init() */
 
-  // MAIN
   init();
 
   btnMatch.addEventListener("click", function (e) {

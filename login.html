@@ -87,11 +87,9 @@
     localStorage.setItem('token', accessToken);
     localStorage.setItem('userId', user.id);
     localStorage.setItem('nickname', user.nickname);
-    localStorage.setItem('avatar', user.avatar);
   }
 
   function login() {
-    console.log('Login!');
 
     const url = `${LOGIN_URL}`;
     const data = {
@@ -104,32 +102,25 @@
       return axios
         .post(url, data)
         .then(function (response) {
-          console.log('login:::', JSON.stringify(response, null, 2));
-
-          domMsg.innerHTML = response.statusText;
 
           if (response.status === 200) {
             saveUserToLocal(response.data);
-
+            alert("登入成功")
             let redirectPath = 'https://arista-hsieh.github.io/project/';
 
             setTimeout(() => {
-              console.log('Redirect!');
               window.location.replace(redirectPath);
             }, 150);
           }
         })
         .catch(function (error) {
-          console.log('error:::', JSON.stringify(error, null, 2));
+          alert("此帳號不存在,或密碼錯誤")
         });
     }
   }
 
   function localLoginChecker() {
-    console.log('localLoginChecker!');
-    // const AUTH = `Bearer ${localStorage.getItem('token')}`;
     const localJWT = localStorage.getItem('token');
-    // console.log(localJWT);
 
   }
 
