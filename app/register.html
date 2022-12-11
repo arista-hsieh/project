@@ -48,7 +48,6 @@ current: index
   }
 
   function signup() {
-    console.log('Signup!');
 
     const url = `${SIGNUP_URL}`;
     const data = {
@@ -61,17 +60,15 @@ current: index
       return axios
         .post(url, data)
         .then(function (response) {
-          console.log('signup:::', JSON.stringify(response, null, 2));
-
-          domMsg.innerHTML = response.statusText;
 
           if (response.status === 201) {
             saveUserToLocal(response.data);
+            alert("註冊成功,請登入會員")
             window.location.replace('/project/login.html');
           }
         })
         .catch(function (error) {
-          console.log('error:::', JSON.stringify(error, null, 2));
+            alert("此帳號已經被使用!")
         });
     }
   }

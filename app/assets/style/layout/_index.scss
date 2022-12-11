@@ -148,3 +148,10 @@ nav{
     color:#fff;
   }
 }
+a{
+  color:#000;
+  text-decoration: none;
+  &:hover{
+    color:#6a3a0D
+  }
+}
