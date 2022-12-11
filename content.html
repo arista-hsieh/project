@@ -156,7 +156,22 @@
     .then(function (response) {
       data = response.data;
       const wrap2 = document.querySelector(".wrap2")
-      str = `<div class="image mt-5">
+      str = `<div class="js-need-login">
+              <div class="js-bookmark-state">收藏狀態：</div>
+
+              <input
+              type="button"
+              value="加入收藏"
+              class="js-add-bookmarks btn btn-light"
+              />
+
+              <input
+              type="button"
+              value="取消收藏"
+              class="js-remove-bookmarks btn btn-light"
+              />
+            </div>
+            <div class="image mt-5">
               <img src="${data.img}" alt="bento">
             </div>
             <div class="m-5">
