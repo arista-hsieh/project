@@ -88,12 +88,10 @@
   /* end of hasLogged() */
 
   function renderBookmarkState() {
-    const params = new URLSearchParams(document.location.search);
-    const postId = params.get('postId') || 1;
 
     const userId = getLoggedID();
-    // users/1/bookmarks?postId=2
-    const url = `${USERS_URL}/${userId}/bookmarks?postId=${postId}`;
+
+    const url = `${USERS_URL}/${userId}/bookmarks?postId=${id}`;
 
     axios
       .get(url)
@@ -109,7 +107,6 @@
           btnRemoveBookmark.style.display = 'block';
           btnAddBookmark.style.display = 'none';
         }
-        /* end of res-OK */
 
         if (response.data.length === 0) {
           domState.innerHTML = `                
@@ -144,10 +141,8 @@
   }
 
   function addBookmark() {
-    const params = new URLSearchParams(document.location.search);
-    const postId = params.get('postId') || 1;
 
-    const url = `${BASE_POST_URL}/${postId}/bookmarks`;
+    const url = `${BASE_POST_URL}/${id}/bookmarks`;
 
     const data = {
       userId: getLoggedID(),
@@ -156,7 +151,6 @@
     axios
       .post(url, data)
       .then(function (response) {
-        console.log('GET-:::', JSON.stringify(response, null, 2));
 
         if (response.status === 201) {
           renderBookmarkState();
@@ -217,9 +211,6 @@
         btnAddBookmark.addEventListener('click', () => addBookmark());
         btnRemoveBookmark.addEventListener('click', () => removeBookmark());
       }
-      /* end of init() */
-
-      // MAIN
       init();
 </script>
 
