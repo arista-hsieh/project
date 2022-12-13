@@ -19,7 +19,6 @@ current: index
   const BOOKMARKS_URL = `${BASE_URL}/600/bookmarks`;
   const USERS_URL = `${BASE_URL}/600/users`;
 
-  const domPostList = document.querySelector('.js-post-list');
   const domState = document.querySelector('.js-bookmark-state');
 
   const btnAddBookmark = document.querySelector('.js-add-bookmarks');
@@ -166,4 +165,8 @@ current: index
             </div>`
       wrap2.innerHTML = str
     })
+
+
+        btnAddBookmark.addEventListener('click', () => addBookmark());
+        btnRemoveBookmark.addEventListener('click', () => removeBookmark());
 </script>
