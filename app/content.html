@@ -40,12 +40,10 @@ current: index
   const btnRemoveBookmark = document.querySelector('.js-remove-bookmarks');
 
   let bookmarkId = 0;
-  /* end of definition */
 
   function getLoggedID() {
     return localStorage.getItem('userId') || 0;
   }
-  /* end of hasLogged() */
 
   function renderBookmarkState() {
 
